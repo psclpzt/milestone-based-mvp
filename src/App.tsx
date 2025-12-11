@@ -348,7 +348,7 @@ export default function App(): JSX.Element {
                       onClick={() => setRuleTemplate("specific-free-product")}
                       className={`text-left rounded border px-3 py-3 transition shadow-sm ${
                         editingDraft.ruleTemplate === "specific-free-product"
-                          ? "border-[#e11d48] bg-[#fff1f2]"
+                          ? "border-[#0f9b4c] bg-[#ecfdf3]"
                           : "border-gray-300 bg-white hover:border-gray-400"
                       }`}
                     >
@@ -357,7 +357,7 @@ export default function App(): JSX.Element {
                           Specific product/stock → Free product
                         </span>
                         {editingDraft.ruleTemplate === "specific-free-product" && (
-                          <span className="text-[11px] text-[#e11d48] font-semibold">Selected</span>
+                          <span className="text-[11px] text-[#0f9b4c] font-semibold">Selected</span>
                         )}
                       </div>
                       <p className="text-[12px] text-gray-600 m-0 mt-1">
@@ -370,7 +370,7 @@ export default function App(): JSX.Element {
                       onClick={() => setRuleTemplate("spend-flat-discount")}
                       className={`text-left rounded border px-3 py-3 transition shadow-sm ${
                         editingDraft.ruleTemplate === "spend-flat-discount"
-                          ? "border-[#e11d48] bg-[#fff1f2]"
+                          ? "border-[#0f9b4c] bg-[#ecfdf3]"
                           : "border-gray-300 bg-white hover:border-gray-400"
                       }`}
                     >
@@ -379,7 +379,7 @@ export default function App(): JSX.Element {
                           Spend threshold → Flat discount
                         </span>
                         {editingDraft.ruleTemplate === "spend-flat-discount" && (
-                          <span className="text-[11px] text-[#e11d48] font-semibold">Selected</span>
+                          <span className="text-[11px] text-[#0f9b4c] font-semibold">Selected</span>
                         )}
                       </div>
                       <p className="text-[12px] text-gray-600 m-0 mt-1">
@@ -405,7 +405,7 @@ export default function App(): JSX.Element {
                           type="number"
                           min={1}
                           step={1}
-                          className="w-20 rounded border-gray-300 text-[13px] px-2 py-1.5 h-auto"
+                          className="w-16 rounded border-gray-300 text-[13px] px-2 py-1.5 h-auto"
                           value={editingDraft.threshold}
                           onChange={(e) =>
                             setEditingDraft({
@@ -447,7 +447,7 @@ export default function App(): JSX.Element {
                           type="number"
                           min={1}
                           step={1}
-                          className="w-20 rounded border-gray-300 text-[13px] px-2 py-1.5 h-auto"
+                          className="w-16 rounded border-gray-300 text-[13px] px-2 py-1.5 h-auto"
                           value={editingDraft.rewardQuantity}
                           onChange={(e) =>
                             setEditingDraft({
@@ -494,7 +494,7 @@ export default function App(): JSX.Element {
                           type="number"
                           min={1}
                           step={1}
-                          className="w-24 rounded border-gray-300 text-[13px] px-2 py-1.5 h-auto"
+                          className="w-20 rounded border-gray-300 text-[13px] px-2 py-1.5 h-auto"
                           value={editingDraft.threshold}
                           onChange={(e) =>
                             setEditingDraft({
@@ -520,7 +520,7 @@ export default function App(): JSX.Element {
                           type="number"
                           min={1}
                           step={1}
-                          className="w-24 rounded border-gray-300 text-[13px] px-2 py-1.5 h-auto"
+                          className="w-20 rounded border-gray-300 text-[13px] px-2 py-1.5 h-auto"
                           value={editingDraft.flatDiscountAmount}
                           onChange={(e) =>
                             setEditingDraft({
