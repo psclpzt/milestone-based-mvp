@@ -9,7 +9,6 @@ import { Switch } from "@/components/ui/switch";
 type TriggerType = "spend" | "specific-item";
 type RewardType = "free-product" | "flat-discount";
 type RuleTemplate = "specific-free-product" | "spend-flat-discount";
-type UnlockBehaviour = "same" | "next";
 
 interface MilestoneRule {
   id: number;
@@ -23,6 +22,7 @@ interface MilestoneRule {
   rewardQuantity: number;
   productToComp: string;
   flatDiscountAmount: number;
+  allowMultipleRedemptions: boolean;
 }
 
 const PRODUCT_OPTIONS = [
@@ -49,6 +49,7 @@ function createDefaultRule(): MilestoneRule {
     rewardQuantity: 1,
     productToComp: "1-hour jump pass",
     flatDiscountAmount: 10,
+    allowMultipleRedemptions: false,
   };
 }
 
@@ -79,10 +80,6 @@ export default function App(): JSX.Element {
 
   // Rule editor state
   const [showRuleEditor, setShowRuleEditor] = useState(false);
-
-  // Redemption rules
-  const [unlockBehaviour, setUnlockBehaviour] = useState<UnlockBehaviour>("same");
-  const [preventStacking, setPreventStacking] = useState(false);
 
   // Expiry rules
   const [expiryValue, setExpiryValue] = useState(90);
@@ -150,6 +147,7 @@ export default function App(): JSX.Element {
       ruleTemplate: template,
       triggerType: template === "specific-free-product" ? ("specific-item" as TriggerType) : ("spend" as TriggerType),
       rewardType: template === "specific-free-product" ? ("free-product" as RewardType) : ("flat-discount" as RewardType),
+      allowMultipleRedemptions: editingDraft.allowMultipleRedemptions ?? false,
     };
     const updated =
       template === "specific-free-product"
@@ -294,7 +292,11 @@ export default function App(): JSX.Element {
                         onClick={() => startEditRule(rule.id)}
                       >
                         <span className="font-medium block">{rule.ruleName || "Untitled rule"}</span>
-                        <span className="text-[11px] text-gray-500 block">{buildRuleSubtitle(rule)}</span>
+                        <span className="text-[11px] text-gray-500 block">
+                          {buildRuleSubtitle(rule)}
+                          {!rule.allowMultipleRedemptions && " • One redemption per transaction"}
+                          {rule.allowMultipleRedemptions && " • Multiple redemptions allowed"}
+                        </span>
                       </button>
                       <button
                         type="button"
@@ -534,6 +536,34 @@ export default function App(): JSX.Element {
                   </>
                 )}
 
+                <div className="mb-3.5">
+                  <div className="flex flex-col items-start text-xs text-gray-500 mb-1">
+                    <span className="text-[13px] text-gray-900 font-medium">Redemption quantity</span>
+                    <span className="text-[11px] text-gray-500">
+                      Control whether guests can redeem multiple available rewards in a single transaction.
+                    </span>
+                  </div>
+                  <label className="flex items-start gap-2 text-[13px] text-gray-900">
+                    <input
+                      type="checkbox"
+                      checked={editingDraft.allowMultipleRedemptions}
+                      onChange={(e) =>
+                        setEditingDraft({
+                          ...editingDraft,
+                          allowMultipleRedemptions: e.target.checked,
+                        })
+                      }
+                      className="mt-1"
+                    />
+                    <div>
+                      Allow multiple rewards in one redemption
+                      <span className="block text-xs text-gray-500">
+                        If unchecked, only one available reward can be applied per transaction.
+                      </span>
+                    </div>
+                  </label>
+                </div>
+
                 <div className="flex gap-2 mt-2">
                   <Button
                     variant="outline"
@@ -551,94 +581,6 @@ export default function App(): JSX.Element {
                 </div>
               </div>
             )}
-          </CardContent>
-        </Card>
-
-        {/* Redemption rules */}
-        <Card className="mb-6 rounded border border-gray-300 bg-white">
-          <CardContent className="p-5 md:p-6">
-            <h2 className="text-base font-semibold mb-3 m-0">Redemption rules</h2>
-            <div className="text-[13px] text-gray-500 mb-4">
-              Control when and where milestone rewards can be redeemed.
-            </div>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <p className="text-[13px] font-semibold mb-2 m-0">Unlock behaviour</p>
-                <div className="mb-3.5">
-                  <div className="flex flex-col items-start text-xs text-gray-500 mb-1">
-                    <span className="text-[13px] text-gray-900 font-medium">
-                      When can guests use this reward?
-                    </span>
-                    <span className="text-[11px] text-gray-500">
-                      Applies to all rewards created by this milestone.
-                    </span>
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <label className="flex items-start gap-1.5 text-[13px] text-gray-900">
-                      <input
-                        type="radio"
-                        name="unlock-behaviour"
-                        value="same"
-                        checked={unlockBehaviour === "same"}
-                        onChange={() => setUnlockBehaviour("same")}
-                        className="mt-1"
-                      />
-                      <div>
-                        Allow reward on the qualifying transaction
-                        <span className="block text-xs text-gray-500">
-                          When the milestone is reached, staff can apply the reward to that basket (E3).
-                        </span>
-                      </div>
-                    </label>
-                    <label className="flex items-start gap-1.5 text-[13px] text-gray-900">
-                      <input
-                        type="radio"
-                        name="unlock-behaviour"
-                        value="next"
-                        checked={unlockBehaviour === "next"}
-                        onChange={() => setUnlockBehaviour("next")}
-                        className="mt-1"
-                      />
-                      <div>
-                        Only allow reward on a future transaction
-                        <span className="block text-xs text-gray-500">
-                          The milestone is unlocked now but can only be redeemed on the guest's next
-                          eligible visit.
-                        </span>
-                      </div>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <p className="text-[13px] font-semibold mb-2 m-0">Advanced redemption settings</p>
-                <div className="mb-3.5">
-                  <div className="flex flex-col items-start text-xs text-gray-500 mb-1">
-                    <span className="text-[13px] text-gray-900 font-medium">Discount behaviour</span>
-                    <span className="text-[11px] text-gray-500">
-                      Helps prevent over-discounting.
-                    </span>
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <label className="flex items-start gap-1.5 text-[13px] text-gray-900">
-                      <input
-                        type="checkbox"
-                        checked={preventStacking}
-                        onChange={(e) => setPreventStacking(e.target.checked)}
-                        className="mt-1"
-                      />
-                      <div>
-                        Prevent stacking with other discounts
-                        <span className="block text-xs text-gray-500">
-                          If another promotion is applied, milestone rewards are suppressed for that
-                          transaction.
-                        </span>
-                      </div>
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
           </CardContent>
         </Card>
 
