@@ -1,6 +1,6 @@
-# Milestone-based Prototype
+# Milestone-based MVP
 
-A React/TypeScript prototype for the milestone-based loyalty program settings interface.
+A React/TypeScript prototype for milestone-based loyalty settings with two curated trigger/reward combinations.
 
 ## Development
 
@@ -27,7 +27,7 @@ npm run preview
    git init
    git add .
    git commit -m "Initial commit"
-   git remote add origin https://github.com/psclpzt/milestone-based-prototype.git
+   git remote add origin https://github.com/psclpzt/milestone-based-mvp.git
    git push -u origin main
    ```
 
@@ -43,7 +43,7 @@ npm run preview
 
 To ensure this project doesn't override your spend-based prototype:
 
-1. **Different Repository**: This project uses a separate GitHub repository (`milestone-based-prototype`)
+1. **Different Repository**: This project uses a separate GitHub repository (`milestone-based-mvp`)
 2. **Different Vercel Project**: Create a new Vercel project with a distinct name
 3. **Different Domain**: Vercel will assign a unique URL (e.g., `milestone-prototype.vercel.app`)
 4. **Separate Environment Variables**: If you add any, they'll be project-specific
@@ -82,9 +82,9 @@ If auto-detection doesn't work, manually set:
 
 ## Features
 
-- Milestone rule configuration
-- Multiple reward types (free product, flat discount, percent-off, points)
-- Category-based eligibility rules
+- Two rule templates:
+  - Specific product/stock milestone → free product reward
+  - Spend threshold milestone → flat discount reward
+- Editable thresholds and reward values
 - Redemption and expiry settings
 - Responsive design matching ROLLERWorld interface
-

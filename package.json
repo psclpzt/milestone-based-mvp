@@ -1,5 +1,5 @@
 {
-  "name": "milestone-based-prototype",
+  "name": "milestone-based-mvp",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -23,4 +23,3 @@
     "vite": "^4.4.5"
   }
 }
-
