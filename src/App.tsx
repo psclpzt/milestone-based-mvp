@@ -391,7 +391,7 @@ export default function App(): JSX.Element {
                 </div>
 
                 {editingDraft.ruleTemplate === "specific-free-product" && (
-                  <>
+                  <div className="grid md:grid-cols-2 gap-4">
                     <div className="mb-3.5">
                       <div className="flex flex-col items-start text-xs text-gray-500 mb-1">
                         <span className="text-[13px] text-gray-900 font-medium">Milestone trigger</span>
@@ -399,13 +399,13 @@ export default function App(): JSX.Element {
                           Guests unlock a reward after booking/purchasing a specific item.
                         </span>
                       </div>
-                      <div className="flex items-center gap-2 flex-wrap text-[13px]">
-                        <span>Guests unlock a milestone reward every</span>
+                      <div className="flex items-center gap-2 text-[13px]">
+                        <span>Guests unlock every</span>
                         <Input
                           type="number"
                           min={1}
                           step={1}
-                          className="rounded border-gray-300 text-[13px] px-2 py-1.5 h-auto w-20"
+                          className="w-20 rounded border-gray-300 text-[13px] px-2 py-1.5 h-auto"
                           value={editingDraft.threshold}
                           onChange={(e) =>
                             setEditingDraft({
@@ -441,13 +441,13 @@ export default function App(): JSX.Element {
                           Decide how many free items guests receive.
                         </span>
                       </div>
-                      <div className="flex items-center gap-2 flex-wrap text-[13px]">
+                      <div className="flex items-center gap-2 text-[13px]">
                         <span>Guests get</span>
                         <Input
                           type="number"
                           min={1}
                           step={1}
-                          className="rounded border-gray-300 text-[13px] px-2 py-1.5 h-auto w-20"
+                          className="w-20 rounded border-gray-300 text-[13px] px-2 py-1.5 h-auto"
                           value={editingDraft.rewardQuantity}
                           onChange={(e) =>
                             setEditingDraft({
@@ -475,11 +475,11 @@ export default function App(): JSX.Element {
                         </select>
                       </div>
                     </div>
-                  </>
+                  </div>
                 )}
 
                 {editingDraft.ruleTemplate === "spend-flat-discount" && (
-                  <>
+                  <div className="grid md:grid-cols-2 gap-4">
                     <div className="mb-3.5">
                       <div className="flex flex-col items-start text-xs text-gray-500 mb-1">
                         <span className="text-[13px] text-gray-900 font-medium">Milestone trigger</span>
@@ -487,14 +487,14 @@ export default function App(): JSX.Element {
                           Guests unlock a reward after spending a set amount.
                         </span>
                       </div>
-                      <div className="flex items-center gap-2 flex-wrap text-[13px]">
-                        <span>Guests unlock a milestone reward every</span>
+                      <div className="flex items-center gap-2 text-[13px]">
+                        <span>Guests unlock every</span>
                         <span>$</span>
                         <Input
                           type="number"
                           min={1}
                           step={1}
-                          className="rounded border-gray-300 text-[13px] px-2 py-1.5 h-auto w-24"
+                          className="w-24 rounded border-gray-300 text-[13px] px-2 py-1.5 h-auto"
                           value={editingDraft.threshold}
                           onChange={(e) =>
                             setEditingDraft({
@@ -503,7 +503,6 @@ export default function App(): JSX.Element {
                             })
                           }
                         />
-                        <span>spent.</span>
                       </div>
                     </div>
 
@@ -514,14 +513,14 @@ export default function App(): JSX.Element {
                           Guests receive a fixed discount when the spend threshold is met.
                         </span>
                       </div>
-                      <div className="flex items-center gap-2 flex-wrap text-[13px]">
+                      <div className="flex items-center gap-2 text-[13px]">
                         <span>Guests receive</span>
                         <span>$</span>
                         <Input
                           type="number"
                           min={1}
                           step={1}
-                          className="rounded border-gray-300 text-[13px] px-2 py-1.5 h-auto w-24"
+                          className="w-24 rounded border-gray-300 text-[13px] px-2 py-1.5 h-auto"
                           value={editingDraft.flatDiscountAmount}
                           onChange={(e) =>
                             setEditingDraft({
@@ -533,7 +532,7 @@ export default function App(): JSX.Element {
                         <span>off.</span>
                       </div>
                     </div>
-                  </>
+                  </div>
                 )}
 
                 <div className="mb-3.5">
